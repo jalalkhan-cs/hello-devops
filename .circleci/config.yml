@@ -20,26 +20,23 @@ jobs:
       - run:
           name: "Step 2 - Authenticate to Org"
           command: |
-            if [[ $CIRCLE_BRANCH == "dev" ]];
-            then
-              echo $SFDXURL_DEV > /tmp/sfdx_dev.url
-              sfdx auth:sfdxurl:store -f /tmp/sfdx_dev.url -a dev_org
-            fi
+            echo $SFDXURL_INT > /tmp/sfdx_int.url
+            sfdx auth:sfdxurl:store -f /tmp/sfdx_int.url -a int_org
       - run:
           name: "Step 3 - Convert to MDAPI format"
           command: |
-            sfdx force:mdapi:convert -r force-app/ -d src/
+            sfdx force:source:convert -r force-app/ -d src/
       - run:
           name: "Step 4 - Deploy"
           command: |
             if [[ $CIRCLE_BRANCH == "dev" ]];
             then
-              # checkonly
-              sfdx force:source:deploy -p src/ -c
+              # checkonly to int
+              sfdx force:source:deploy -p src/ -c -a int_org
             fi
             if [[ $CIRCLE_BRANCH == "integration" ]];
             then
-              # do a real deploy
-              sfdx force:deploy -p src/
+              # deploy to int
+              sfdx force:deploy -p src/ -a int_org
             fi
             

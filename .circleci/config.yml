@@ -28,7 +28,7 @@ jobs:
       - run:
           name: "Step 3 - Convert to MDAPI format"
           command: |
-            sfdx force:mdapi:convert -d src/
+            sfdx force:mdapi:convert -r force-app/ -d src/
       - run:
           name: "Step 4 - Deploy"
           command: |

@@ -32,11 +32,11 @@ jobs:
             if [[ $CIRCLE_BRANCH == "dev" ]];
             then
               # checkonly to int
-              sfdx force:source:deploy -p src/ -c -a int_org
+              sfdx force:source:deploy -p src/ -c -u int_org
             fi
             if [[ $CIRCLE_BRANCH == "integration" ]];
             then
               # deploy to int
-              sfdx force:deploy -p src/ -a int_org
+              sfdx force:source:deploy -p src/ -u int_org
             fi
             

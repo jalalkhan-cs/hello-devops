@@ -37,6 +37,6 @@ jobs:
             if [[ $CIRCLE_BRANCH == "integration" ]];
             then
               # deploy to int
-              sfdx force:deploy -p src/ -u int_org
+              sfdx force:source:deploy -p src/ -u int_org
             fi
             
